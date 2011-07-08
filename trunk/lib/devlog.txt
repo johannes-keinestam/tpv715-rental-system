@@ -1,0 +1,101 @@
+2011-07-04
+Nu har jag tagit en sista koll på labb 2 och de tillhörande testfallen, och allt verkar
+fungera som det ska. Jag paketerar programmet och skickar in.
+
+2011-07-01
+Nu har jag allt funktionalitet färdig för inlämningen av laboration 2, så under dagen
+har jag ägnat mig till dokumentering (kommentarer i koden samt readme-filen). Jag är
+fortfarande inte riktigt säker på strukturen för README-filen, för det verkar finnas
+två lite skilda beskrivningar: en som en readme som skeppas med vanliga program och
+innehåller changelog och installationsanvisningar, den andra ungefär som en rapport över
+projektet. Jag har därmed valt att inkludera båda delarna, för säkerhets skull!
+
+2011-06-29
+För att kunna ge meddelanden till användare av systemet så skapade jag en modul som
+heter Messenger, som jag hela tiden kan kalla för att visa felmeddelanden eller vanliga
+meddelanden. Main-filen har utökats med lite enkel logik, som utför "setup" för programmet. Den
+hyr tre slumpmässigt utvalda varor för tre slumpmässigt utvalda kunder. Efter detta
+introducerar jag en global variabel MESSAGES_ON, som säger åt meddelandesystemet att
+aktiveras (jag vill nämligen inte ha utskrifter för de första slumpade uthyrningarna).
+
+2011-06-26
+För att få de nya menyerna att fungera så har jag utökat DataContainer, så att den
+håller koll på hela sortimentet samt alla beställningar som har registrerats (även
+inaktiva, dvs för varor som har lämnats tillbaka). Det största jobbet har dock varit
+kösystemet, som behöver en hel del logik för att fungera som önskat. En fundering jag har
+är angående det som i labbdokumenten kallas "Lista kunder", som jag har kallat "Selection".
+Detta nya namn eftersom enligt beskrivningen verkar det snarare ha med en produktlista
+snarare än en kundlista; det står att den ska markera ut vilka varor som är lediga.
+
+2011-06-24
+Jag vill bygga kösystemet, och har gjort en modul som tar hand om det. Dock är det
+ett dilemma hur man ska sköta det. Vad ska hända när en vara blir ledig, och en som
+står i kö får tillgång till den? Man kanske borde meddela via systemet på något sätt,
+men för att verkligen göra det ett "kösystem" så måste den köande kundens hyrtid sätta
+igång automatiskt, varpå han sedan kan lämna tillbaka den. Om inte, blir det inte så
+mycket av en kö, bara ett meddelandesystem som säger "Det finns en båt ledig nu, gå
+in i Uthyrningar och hyr den", och då kan ju vem som helst hyra den istället för just
+den personen som står först i kön. Som lösning har jag valt att starta den kösattas hyrtid
+automatiskt när en artikel av önskad sort blir tillgänglig, och då skriva ut ett
+meddelande i huvudmenyn som säger till kunden om detta.
+
+2011-06-23
+En fundering jag har är hur man ska skapa klasser som det inte behövs instanser
+av (som statiska eller singleton-klasser i Java). Hittills har jag använt moduler
+för detta, eftersom det inte går att skapa instanser av dem. Detta rör de delar i
+programmet som är relativt statiska (de som skriver ut till konsollen och den som håller
+koll på datan). Jag har även börjat strukturera programmet i två mappar, en som heter
+views (som hanterar vyn för användaren, dvs konsollen) och data (håller koll på data
+och logik). Jag delade också upp den tidigare MenuSystem-modulen till en modul för
+varje meny, så att jag kan detaljstyra varje steg i varje meny och på så sätt ge
+felmeddelanden och låta användaren göra om en steg om så behövs.
+
+2011-06-21
+Börjar med labb 2. Första saken jag gör är att skapa en klass Article som beskriver
+en produkt som kan hyras ut. Detta gör så att det blir smidigare att skapa fler
+artiklar senare. Nu funderar jag på hur jag ska lagra datan, och nu lutar jag mot
+en två-dimensionell array som i första dimensionen har produktkategorier (t.ex. Boat,
+DivingGear), och i andra dimensionen har jag listan över alla produkter, som jag då
+skapar vid programstarten. Möjligen en hash map med arrayer i sig, så jag kan använda
+nycklarna för att namnge produktkategorierna.
+
+2011-06-16
+Känns mycket möjligt att jag kanske lade ner lite väl mycket arbete på den här första
+labben, eftersom kursmaterialet inte ens börjat gå igenom metoder och klasser än.
+Nåväl, det gör ingenting, det gör det endast enklare att fortsätta på nästa labb!
+Nu känner jag mig klar, så jag körde igenom testerna och det fungerade väl. Det
+enda jag inte är säker på är utformningen av README-filen, så jag improviserade
+lite. Den kommer förmodligen förändras i senare labbar. Jag zippar filerna, och skickar in.
+
+2011-06-15
+Läste just klart kapitlet om iteratorer, så jag passade på att lägga till en sådan
+i menysystemet, för att visa alla ordrar. Bra mycket snyggare än min tidigare
+for-loop. Kommenterade, samt implementerade kod i menysystemet för att använda
+mina nya klasser Boat och Order. 
+
+2011-06-12
+Jag förstår mig inte riktigt på användningsområdet för en klass "Gäst" som labbdokumentet
+beskriver; den känns onödig änsålänge i programmet. Jag kan tänka mig en klass Customer
+vid ett lite senare tillfälle i programmet (inte riktigt aktuellt nu eftersom ingen hantering
+av olika användare ska ske än). Lägger till en klass för att hantera en order, som har ett
+namn (senare ett Customer-objekt möjligen) samt en produkt. Produkten som finns änsålänge
+är Boat. 
+
+2011-06-09
+Har skrivit klart menysystemet, nu som en modul (kanske gör den klass senare om jag ska
+försöka mig på ett MVC-mönster). Inga egentliga svårigheter har jag stött på, förutom
+hur man använder require. Vad jag har förstått så kan man inte använda require med en
+relativ sökväg i Ruby 1.92, utan man måste nu använda require_relative. En annan småsak
+som jag var tvungen att lösa är att man får med ett newline-tecken (/n) om man använder
+gets utan chomp-metoden.
+
+2011-06-06
+Jag har lekt lite med utskrift till konsollen, och hur man kan lagra text som är flera
+rader lång och som ska skrivas ut vid senare tillfälle. Änsålänge använder jag en array.
+Jag märker att koden blir mer kortfattad än motsvarigheten i Java, och jag märker att
+jag får tänka på att försöka skriva riktig Ruby-kod istället för Java-kod med Ruby-syntax.
+
+2011-06-05
+Läser igenom laborationsdokumentet. Eftersom jag har någorlunda programmeringskunskaper
+sedan tidigare känns inte detta som någon större utmaning. Jag har endast läst i boken
+änsålänge, så det ska bli intressant att se om något har fastnat i huvudet.
