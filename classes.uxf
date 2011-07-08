@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.3">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>30</x>
+      <y>250</y>
+      <w>210</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Order
+--
++product
+-customer
+-active
+-start_time
+-stop_time
+--
++initialize(product, customer)
++is_active?()
++set_active(bool)
++get_price()
++to_s()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>310</x>
+      <y>250</y>
+      <w>210</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>Customer
+--
+-name
+-adress
+-phone_no
+--
++initialize(name)
++&lt;=&gt;(other)
++to_s()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>30</x>
+      <y>20</y>
+      <w>240</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Module&gt;&gt;
+DataContainer
+--
+-selection
+-customers
+--
++rent(product, customer)
++return(order)
++add_to_selection(category, product)
++rent_random()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>210</x>
+      <y>320</y>
+      <w>120</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-
+has a&gt;</panel_attributes>
+    <additional_attributes>30;50;100;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>280</x>
+      <y>20</y>
+      <w>240</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Module&gt;&gt;
+QueueSystem
+--
+-queue
+--
++queue(product, customer)
++check_availability()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>30</x>
+      <y>470</y>
+      <w>210</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Article
+--
++idNo
+-rented
+-price
+--
++rent()
++return_product()
++is_rented?()
++get_price(hours)
++to_s()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>310</x>
+      <y>480</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Boat</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>310</x>
+      <y>520</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>DivingGear</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>310</x>
+      <y>560</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>JetSki</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>310</x>
+      <y>600</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Surfboard</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>210</x>
+      <y>460</y>
+      <w>120</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;50;100;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>210</x>
+      <y>500</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;40;100;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>210</x>
+      <y>530</y>
+      <w>120</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;100;40</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>210</x>
+      <y>560</y>
+      <w>120</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;100;50</additional_attributes>
+  </element>
+</diagram>
