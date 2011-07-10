@@ -9,10 +9,12 @@ require_relative "data/surfboard"
 puts "Starting up..."
 
 #Creating selection
-12.times{ |i| DataContainer.add_to_selection("Boat", Boat.new(i+1)) }
-5.times { |i| DataContainer.add_to_selection("Diving Gear", DivingGear.new(i+1)) }
-3.times { |i| DataContainer.add_to_selection("Jet Ski", JetSki.new(i+1)) }
-15.times { |i| DataContainer.add_to_selection("Surfboard", Surfboard.new(i+1)) }
+boat_names = ["Liberty", "Victory", "Seahorse", "Silver Lining", "Serenity", "Sea Ya", "Sea Spirit",
+              "Misty", "Wind Dancer", "Destiny", "Tide Runner", "Sundancer"]
+12.times{ |i| DataContainer.add_to_selection(Boat, Boat.new(boat_names[i])) }
+5.times { |i| DataContainer.add_to_selection(DivingGear, DivingGear.new(i+1)) }
+3.times { |i| DataContainer.add_to_selection(JetSki, JetSki.new(i+1)) }
+15.times { |i| DataContainer.add_to_selection(Surfboard, Surfboard.new(i+1)) }
 
 #Rents three random products
 3.times{DataContainer::rent}

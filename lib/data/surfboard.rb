@@ -2,10 +2,12 @@ require_relative "article"
 
 #Describes a surfboard in the rental store. Extends Article.
 class Surfboard < Article
+  @price_hr = 10
+  @price_base = 15
+  @price_day = 100
+  
   def initialize(idNo)
     @rented = false
-    @price_hr = 10
-    @price_base = 15
     @idNo = idNo
   end
 
