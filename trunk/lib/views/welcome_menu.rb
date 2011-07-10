@@ -1,6 +1,7 @@
 require_relative "rent_menu"
 require_relative "return_menu"
 require_relative "listings_menu"
+require_relative "financial_menu"
 
 #Menu shown at startup, which presents the structure of the program.
 module WelcomeMenu
@@ -15,6 +16,7 @@ module WelcomeMenu
     puts "    1. Rent"
     puts "    2. Return"
     puts "    3. Listings"
+    puts "    4. Financials"
     puts "    0. Exit"
     puts "============================================================"
     puts "What do you want to do?"
@@ -31,6 +33,7 @@ module WelcomeMenu
       when "1" then RentMenu::show
       when "2" then ReturnMenu::show
       when "3" then ListingsMenu::show
+      when "4" then FinancialMenu::show
       when "0" then Process.exit
       else WelcomeMenu.show
     end

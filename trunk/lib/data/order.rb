@@ -1,6 +1,6 @@
 #Describes an order of one product placed in the system. 
 class Order
-  attr_reader :product, :start_time, :stop_time
+  attr_reader :product, :customer, :start_time, :stop_time
 
   #Creates a new order for the specified customer
   def initialize(product, customer)

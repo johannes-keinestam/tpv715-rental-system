@@ -27,16 +27,17 @@ module RentMenu
   def RentMenu.get_choice
     product_no = gets.to_i
 
-    #Rents the chosen product (only one now).
-    if product_no != 0 or @product_categories[product_no-1].nil?
+    #Rents the chosen product.
+    if product_no != 0 and not @product_categories[product_no-1].nil?
+      puts "(#{@product_categories[product_no-1]})"
       get_details
       DataContainer::rent(@product_categories[product_no-1], @rental_customer)
-      WelcomeMenu::show
+      self.show
     elsif product_no == 0
       WelcomeMenu::show
     else
       Messenger::show_error("Not valid menu choice")
-      show
+      self.show
     end
   end
 
@@ -46,22 +47,25 @@ module RentMenu
     rental_name = gets.chomp
 
     #Checks if customer entry already exists
-    customer_entry = DataContainer::get_customer(@rental_name)
+    customer_entry = DataContainer::get_customer(rental_name)
     unless customer_entry.nil?
       puts "Name: #{customer_entry.name}"
       puts "Address: #{customer_entry.address}"
       puts "Card number: #{customer_entry.card_no}"
       puts "Is this you? (Y/N)"
       choice = gets.chomp
-      if choice.casecmp("Y")
+      if choice.casecmp("Y") == 0
         @rental_customer = customer_entry
+        return
       end
-    else
-      puts "Your address:"
-      rental_add = gets.chomp
-      puts "Your ATM card number:"
-      rental_card = gets.chomp
-      @rental_customer = Customer.new(rental_name, rental_card, rental_add)
     end
+    puts "Your address: (ex. 123 Main Street, 90210 CA)"
+    rental_add = gets.chomp
+    rental_card = ""
+    while rental_card.match(/\A\d{4}-\d{4}-\d{4}-\d{4}\z/).nil?
+      puts "Your ATM card number: (ex. 1234-1234-1234-1234)"
+      rental_card = gets.chomp
+    end
+    @rental_customer = Customer.new(rental_name, rental_card, rental_add)
   end
 end

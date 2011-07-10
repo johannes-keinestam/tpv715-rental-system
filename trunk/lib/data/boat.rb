@@ -2,14 +2,17 @@ require_relative "article"
 
 #Describes a boat in the rental store. Extends Article.
 class Boat < Article
-  def initialize(idNo)
+  @price_hr = 100
+  @price_base = 200
+  @price_day = 1200
+  
+  def initialize(name)
     @rented = false
-    @price_h = 100
-    @idNo = idNo
+    @name = name
   end
 
   #Returns the name of the boat incl. ID number
   def to_s
-    return "Boat #{@idNo}"
+    return "Boat: #{@name}"
   end
 end

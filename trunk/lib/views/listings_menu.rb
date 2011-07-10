@@ -74,9 +74,22 @@ module ListingsMenu
     #Gets all customers from DataContainer
     @customers = (DataContainer::get_orders).keys.sort
 
+    cust_length = @customers.sort { |a,b| a.name.length <=> b.name.length }
+    table_length_customer = cust_length.last.name.length+5
+    add_length = @customers.sort { |a,b| a.address.length <=> b.address.length }
+    table_length_address = add_length.last.address.length+5
+
+    table_format = "    %-#{table_length_customer}s %#{table_length_address}s"
+
     puts "============================================================"
-    puts "Customer registry:"
-    @customers.each { |customer| puts "    #{customer}" }
+    puts "Customer registry:\n\n"
+    puts table_format % ["Customer", "Address"]
+    puts "    --------------------------------------------------------"
+    @customers.each { |customer| puts table_format %
+      [customer.name, customer.address] }
+    puts "    --------------------------------------------------------"
+    puts table_format % ["Customers:", @customers.length.to_s]
+    puts "\n"
     puts "============================================================"
     puts "Press Enter to return"
 

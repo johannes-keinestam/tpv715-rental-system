@@ -27,7 +27,7 @@ module ReturnMenu
     choice = gets.to_i
 
     #If valid number tried to be deleted, return to welcome menu, otherwise show again
-    if choice != 0 and choice-1 <= @orders.length
+    if choice != 0 and choice <= @orders.length
       returned_order = @orders[choice-1]
       DataContainer::return(returned_order)
       Messenger::show_message("#{returned_order.product} returned!\nRented: #{returned_order.start_time}\nReturned: #{returned_order.stop_time}\nPrice: $#{returned_order.get_price}")
@@ -36,6 +36,6 @@ module ReturnMenu
     else
       Messenger::show_error("Not valid menu choice")
     end
-    WelcomeMenu::show
+    self.show
   end
 end
