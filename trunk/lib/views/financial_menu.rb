@@ -1,5 +1,6 @@
 require_relative "welcome_menu"
 require_relative "../data/data_container"
+require "Date"
 
 module FinancialMenu
   def FinancialMenu.show
@@ -8,7 +9,8 @@ module FinancialMenu
     puts "============================================================"
     puts "Financials:"
     puts "    1. Price list"
-    puts "    2. Financial summary"
+    puts "    2. Edit prices"
+    puts "    3. Financial summary"
     puts "    0. Return"
     puts "============================================================"
     puts "What do you want to do?"
@@ -23,7 +25,8 @@ module FinancialMenu
     #Handles the input from the user. Easily extendable for later.
     case choice
       when "1" then show_prices
-      when "2" then show_financials
+      when "2" then show_edit_prices
+      when "3" then show_financials
       else WelcomeMenu.show
     end
   end
@@ -60,6 +63,57 @@ module FinancialMenu
     FinancialMenu::show
   end
 
+  def FinancialMenu.show_edit_prices
+    system "cls"
+
+    product_categories = (DataContainer::get_selection).keys.flatten
+
+    puts "============================================================"
+    puts "Edit prices:"
+    product_categories.each_index { |i| puts "    #{i+1}. #{product_categories[i].to_s}" }
+    puts "    0. Return"
+    puts "============================================================"
+    puts "What prices do you want to edit?"
+
+    choice = gets.to_i
+    if choice > 0 and choice <= product_categories.length
+      system "cls"
+      product = product_categories[choice-1]
+      puts "Input a new price for each type.\nThe price will not change if the input is invalid or empty.\n\n"
+
+      puts "#{product}, base price:"
+      b_price = gets.to_i
+      b_price_old = product.price_base
+      product.price_base = b_price if b_price > 0
+
+      puts "#{product}, hourly price:"
+      h_price = gets.to_i
+      h_price_old = product.price_hr
+      product.price_hr = h_price if h_price > 0
+
+      puts "#{product}, daily price:"
+      d_price = gets.to_i
+      d_price_old = product.price_day
+      product.price_day = d_price if d_price > 0
+
+      puts "\nNEW PRICES, #{product.to_s.upcase}:"
+      puts "Base $#{product.price_base} (old $#{b_price_old})"
+      puts "Hourly $#{product.price_hr} (old $#{h_price_old})"
+      puts "Daily $#{product.price_day} (old $#{d_price_old})"
+      puts "========================================================"
+      puts "PRESS ENTER TO RETURN"
+      gets
+      FinancialMenu::show
+    else
+      if choice == 0
+        FinancialMenu::show
+      else
+        Messenger::show_error("Invalid menu choice") unless choice == 0
+        show_edit_prices
+      end
+    end
+  end
+
   def FinancialMenu.show_financials
     system "cls"
 
@@ -92,6 +146,17 @@ module FinancialMenu
     #converts collected format data to format string
     table_format = "    %-#{table_length_product}s %-#{table_length_customer}s %#{table_length_price}s"
 
+    #Creates monthly financial data
+    monthly_list = Hash.new
+    paid_orders.each do |order|
+      month = "#{Date::MONTHNAMES[order.stop_time.month]} #{order.stop_time.year}"
+      unless monthly_list.has_key?(month)
+        monthly_list[month] = [0, 0]
+      end
+      monthly_list[month][0] += order.get_price
+      monthly_list[month][1] += 1
+    end
+
     #shows menu
     puts "============================================================"
     puts "Financial summary:\n\n"
@@ -102,6 +167,11 @@ module FinancialMenu
     puts "    --------------------------------------------------------"
     puts table_format % ["Total:", "", "$"+total_price.to_s]
     puts "\n"
+    puts table_format % ["Month", "Rentals", "Income"]
+    puts "    --------------------------------------------------------"
+    monthly_list.each { |month,info| puts table_format %
+      [month, info[1].to_s, "$"+info[0].to_s]}
+    puts "    --------------------------------------------------------"
     puts "============================================================"
     puts "Press Enter to return"
 

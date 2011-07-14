@@ -29,12 +29,15 @@ class Order
   #Unimplemented method that will calculate a price for the order using the registred
   #time stamps of the start and the end of the rental time.
   def get_price
-    if @active
-      hours = ((@start_time-Time.now)/3600).to_i
-    else
-      hours = ((@start_time-@stop_time)/3600).to_i
+    if @price.nil?
+      if @active
+        hours = ((@start_time-Time.now)/3600).to_i
+      else
+        hours = ((@start_time-@stop_time)/3600).to_i
+      end
+      @price = @product.get_price(hours)
     end
-    return @product.get_price(hours)
+    return @price
   end
 
   #Returns a string presenting an active order. Used in "Return menu"
