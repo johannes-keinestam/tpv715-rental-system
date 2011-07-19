@@ -1,6 +1,7 @@
 require_relative "article"
 
-#Describes a surfboard in the rental store. Extends Article.
+#Describes a surfboard in the rental store. Extends Article. See article.rb for
+#further documentation.
 class Surfboard < Article
   @price_hr = 10
   @price_base = 15

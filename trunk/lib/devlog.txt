@@ -1,3 +1,64 @@
+2011-07-19
+Färdig med laboration 3. Dokumenterar, testar och lämnar in!
+
+2011-07-17
+Felhantering har jag huvudsakligen ägnat dagens pass till. Från diverse tester verkar
+det vara buggfritt (man vet aldrig dock...). Trots detta har jag väldigt få rescue-satser,
+detta för att jag föredrar att gardera mig tidigare i koden (i if-satser t.ex.) snarare
+än att ta hand om ett undantag när det väl stöter upp. Jag har också omstrukturerat
+koden lite. Främst har jag delat upp den stora DataContainer till två mindre moduler:
+OrderHandler och ProductHandler. Jag flyttade alla produktklasser (Article och dess
+subklasser) till en egen mapp för att de inte ska kluttra upp resten av data-mappen.
+
+2011-07-16
+Sista funktionaliten jag ska lägga till före inlämning är menyn för att redigera priser.
+Den ligger som undermeny i Financials, och är praktiskt sätt bara ett gränssnitt för
+att ändra instansvariablerna för Article-klasserna. Inga problem. 
+
+2011-07-15
+Under uthyrningsprocessen har jag lagt till funktionen som hämtar data från kund-
+registret ifall någon med samma namn har handlat där förut. En sak att tänka på är
+fallet där det finns två kunder med samma namn i registret. Jag har valt att
+presentera den av kunderna med detta namn som har senast hyrt en vara, och fråga
+"Är detta du? (Y/N)". Ifall man är den andra kunden får man registrera sig igen.
+Detta för att inte göra användargränssnittet jobbigare än vad det måste vara.
+
+2011-07-14
+Att fylla ut ekonomimenyn med faktisk data från programmet var inga större problem.
+Jag behöver bara iterera igenom datan som redan finns trevligt nog i hashtabeller.
+Jag har valt att presentera datan i "Summera intäkter" ("Financial Summary") först
+per order, sedan totalt per månad. Detta krävde lite småfippel med iterationer men
+inget särskilt jobbigt. Jag har även utökat Customer-klassen med lite information
+så som kreditkort och adress.
+
+2011-07-13
+Jag har haft lite problem med priserna för varor. Jag tänkte att de skulle vara
+klassvariablar så att man kommer åt dom utan att skapa instanser. På grund av arven
+hos produkterna skapade detta problem, då klassvariabel i Ruby inte är samma som Java.
+Om jag ändrar en klassvariabel för klassen JetSki (som ärver från Article) så ändras
+den även i andra klasser som ärver från Article. Min lösning var att göra det en
+instansvariabel på klassnivå (dvs utanför metoder), och eftersom allt är objekt i Ruby
+så kunde man tydligen komma åt denna variabel utan att skapa instanser av den. Med detta
+har jag implementerat prislistan i ekonomimenyn.
+
+2011-07-10
+Tidssystemet är färdigt, och tider registreras automatiskt från när man börjar hyra
+och sedan lämnar tillbaka. Med tanke på strukturen så skulle jag kunna göra så att man
+kan reservera varor för framtida hyrning, men det har jag valt att inte implementera då
+jag tror det skulle göra programmet lite rörigt för användare. Prissättning är utefter,
+och rabatterade dagspriser används ifall man hyrt längre än 24 timmar. Produkterna har
+även ett baspris, som alltid dras av. Jag har också lagt till information av priset
+när en kund lämnar tillbaka en vara.
+
+2011-07-08
+Påbörjar laboration 3. Efter att ha läst anvisningarna tycker jag inte det känns som
+något större arbete. Kanske eftersom jag lade ner en del möda på strukturen av programmet
+redan i labb 1 och 2. De klasser jag redan använder behöver fungerar utan några problem
+för den nya funktionaliteten. Jag har omstrukturerat menyssystemet, och har bestämt
+att en modul får representera ett val i huvudmenyn, så en modul innehåller även sina
+undermenyer. Ekonomimenyn ("Financials") är färdigdesignad, och jag har valt att hitta
+ett sätt att presentera datan lite bättre, i tabeller.
+
 2011-07-04
 Nu har jag tagit en sista koll på labb 2 och de tillhörande testfallen, och allt verkar
 fungera som det ska. Jag paketerar programmet och skickar in.

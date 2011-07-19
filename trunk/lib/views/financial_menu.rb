@@ -1,8 +1,11 @@
 require_relative "welcome_menu"
-require_relative "../data/data_container"
+require_relative "../data/order_handler"
+require_relative "../data/product_handler"
 require "Date"
 
+#Menu which presents financial information to the user.
 module FinancialMenu
+  #Shows financial main menu in the console.
   def FinancialMenu.show
     system "cls"
 
@@ -27,15 +30,19 @@ module FinancialMenu
       when "1" then show_prices
       when "2" then show_edit_prices
       when "3" then show_financials
-      else WelcomeMenu.show
+      when "0" then WelcomeMenu::show
+      else FinancialMenu.show
     end
   end
 
+  #Shows a table of product prices to the user.
   def FinancialMenu.show_prices
     system "cls"
 
-    product_categories = (DataContainer::get_selection).keys.flatten
+    #Gets the types of products in the system.
+    product_categories = (ProductHandler::get_selection).keys.flatten
 
+    #Calculates the format of the table to display the data in
     name_length = product_categories.sort { |a,b| a.to_s.length <=> b.to_s.length }
     table_length_name = name_length.last.to_s.length+5
     bprice_length = product_categories.sort { |a,b| a.price_base.to_s.length <=> b.price_base.to_s.length }
@@ -47,6 +54,7 @@ module FinancialMenu
 
     table_format = "    %-#{table_length_name}s %#{table_length_bprice}s %#{table_length_hprice}s %#{table_length_dprice}s"
 
+    #Displays it in table.
     puts "============================================================"
     puts "Price list:\n\n"
     puts table_format % ["", "Base", "Hourly", "Daily"]
@@ -63,11 +71,14 @@ module FinancialMenu
     FinancialMenu::show
   end
 
+  #Shows submenu for product prices, and lets the user change the prices.
   def FinancialMenu.show_edit_prices
     system "cls"
 
-    product_categories = (DataContainer::get_selection).keys.flatten
+    #Gets the types of products in the system.
+    product_categories = (ProductHandler::get_selection).keys.flatten
 
+    #Shows menu of products, letting the user choose which price to change.
     puts "============================================================"
     puts "Edit prices:"
     product_categories.each_index { |i| puts "    #{i+1}. #{product_categories[i].to_s}" }
@@ -76,35 +87,43 @@ module FinancialMenu
     puts "What prices do you want to edit?"
 
     choice = gets.to_i
+
+    #If choice is valid, let's the user change the products prices.
     if choice > 0 and choice <= product_categories.length
       system "cls"
       product = product_categories[choice-1]
-      puts "Input a new price for each type.\nThe price will not change if the input is invalid or empty.\n\n"
+      puts "Changing prices for #{product}".upcase
+      puts "=========================================================="
+      puts "Input a new price for each type.\n" +
+           "The price will not change if the input is invalid or empty.\n\n"
 
-      puts "#{product}, base price:"
-      b_price = gets.to_i
+      #Sets price only if it is valid (i.e. positive integer)
+      puts "Base price:"
+      b_price = Integer(gets.chomp) rescue b_price = -1
       b_price_old = product.price_base
-      product.price_base = b_price if b_price > 0
+      product.price_base = b_price if b_price >= 0
 
-      puts "#{product}, hourly price:"
-      h_price = gets.to_i
+      puts "Hourly price:"
+      h_price = Integer(gets.chomp) rescue h_price = -1
       h_price_old = product.price_hr
-      product.price_hr = h_price if h_price > 0
+      product.price_hr = h_price if h_price >= 0
 
-      puts "#{product}, daily price:"
-      d_price = gets.to_i
+      puts "Daily price:"
+      d_price = Integer(gets.chomp) rescue d_price = -1
       d_price_old = product.price_day
-      product.price_day = d_price if d_price > 0
+      product.price_day = d_price if d_price >= 0
 
       puts "\nNEW PRICES, #{product.to_s.upcase}:"
       puts "Base $#{product.price_base} (old $#{b_price_old})"
       puts "Hourly $#{product.price_hr} (old $#{h_price_old})"
       puts "Daily $#{product.price_day} (old $#{d_price_old})"
-      puts "========================================================"
+      puts "=========================================================="
       puts "PRESS ENTER TO RETURN"
+
       gets
       FinancialMenu::show
     else
+      #Else, either go back or inform the user of invalid menu choice.
       if choice == 0
         FinancialMenu::show
       else
@@ -114,11 +133,12 @@ module FinancialMenu
     end
   end
 
+  #Shows table of a summary of the financials (income, total and by month).
   def FinancialMenu.show_financials
     system "cls"
 
     #gets all paid orders.
-    orders = (DataContainer::get_orders).values.flatten
+    orders = OrderHandler::get_orders
     paid_orders = orders.select { |order| not order.is_active? }
 
     #calculates total price
@@ -157,7 +177,7 @@ module FinancialMenu
       monthly_list[month][1] += 1
     end
 
-    #shows menu
+    #shows total, followed by monthly, income data
     puts "============================================================"
     puts "Financial summary:\n\n"
     puts table_format % ["Article", "Customer", "Income"]
@@ -171,7 +191,7 @@ module FinancialMenu
     puts "    --------------------------------------------------------"
     monthly_list.each { |month,info| puts table_format %
       [month, info[1].to_s, "$"+info[0].to_s]}
-    puts "    --------------------------------------------------------"
+    puts "    --------------------------------------------------------\n\n"
     puts "============================================================"
     puts "Press Enter to return"
 
