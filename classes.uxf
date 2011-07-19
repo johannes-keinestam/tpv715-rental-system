@@ -4,18 +4,18 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>30</x>
-      <y>250</y>
+      <x>20</x>
+      <y>260</y>
       <w>210</w>
       <h>200</h>
     </coordinates>
     <panel_attributes>Order
 --
 +product
--customer
++customer
++start_time
++stop_time
 -active
--start_time
--stop_time
 --
 +initialize(product, customer)
 +is_active?()
@@ -27,16 +27,16 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>310</x>
-      <y>250</y>
+      <x>280</x>
+      <y>260</y>
       <w>210</w>
       <h>200</h>
     </coordinates>
     <panel_attributes>Customer
 --
--name
--adress
--phone_no
++name
++adress
++card_no
 --
 +initialize(name)
 +&lt;=&gt;(other)
@@ -46,42 +46,39 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>30</x>
-      <y>20</y>
+      <x>270</x>
+      <y>50</y>
       <w>240</w>
       <h>200</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Module&gt;&gt;
-DataContainer
+ProductHandler
 --
 -selection
--customers
 --
-+rent(product, customer)
-+return(order)
-+add_to_selection(category, product)
-+rent_random()</panel_attributes>
++get_selection()
++add_to_selection(category, product)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>210</x>
-      <y>320</y>
-      <w>120</w>
+      <x>200</x>
+      <y>330</y>
+      <w>100</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=-
 has a&gt;</panel_attributes>
-    <additional_attributes>30;50;100;50</additional_attributes>
+    <additional_attributes>30;50;80;50</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>280</x>
-      <y>20</y>
+      <x>540</x>
+      <y>40</y>
       <w>240</w>
-      <h>200</h>
+      <h>160</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Module&gt;&gt;
 QueueSystem
@@ -96,14 +93,17 @@ QueueSystem
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>30</x>
-      <y>470</y>
+      <x>550</x>
+      <y>240</y>
       <w>210</w>
-      <h>170</h>
+      <h>220</h>
     </coordinates>
     <panel_attributes>Article
 --
 +idNo
++price_hr
++price_base
++price_daily
 -rented
 -price
 --
@@ -117,8 +117,8 @@ QueueSystem
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>310</x>
-      <y>480</y>
+      <x>830</x>
+      <y>250</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -128,8 +128,8 @@ QueueSystem
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>310</x>
-      <y>520</y>
+      <x>830</x>
+      <y>290</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -139,8 +139,8 @@ QueueSystem
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>310</x>
-      <y>560</y>
+      <x>830</x>
+      <y>340</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -150,8 +150,8 @@ QueueSystem
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>310</x>
-      <y>600</y>
+      <x>830</x>
+      <y>380</y>
       <w>100</w>
       <h>30</h>
     </coordinates>
@@ -161,8 +161,8 @@ QueueSystem
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>210</x>
-      <y>460</y>
+      <x>730</x>
+      <y>230</y>
       <w>120</w>
       <h>70</h>
     </coordinates>
@@ -172,8 +172,8 @@ QueueSystem
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>210</x>
-      <y>500</y>
+      <x>730</x>
+      <y>270</y>
       <w>120</w>
       <h>60</h>
     </coordinates>
@@ -183,23 +183,68 @@ QueueSystem
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>210</x>
-      <y>530</y>
-      <w>120</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;100;40</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>210</x>
-      <y>560</y>
+      <x>730</x>
+      <y>300</y>
       <w>120</w>
       <h>70</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>30;30;100;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>730</x>
+      <y>330</y>
+      <w>120</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;100;60</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Package</type>
+    <coordinates>
+      <x>10</x>
+      <y>10</y>
+      <w>1010</w>
+      <h>490</h>
+    </coordinates>
+    <panel_attributes>data
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Package</type>
+    <coordinates>
+      <x>540</x>
+      <y>210</y>
+      <w>460</w>
+      <h>270</h>
+    </coordinates>
+    <panel_attributes>products</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>20</x>
+      <y>50</y>
+      <w>240</w>
+      <h>200</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;Module&gt;&gt;
+OrderHandler
+--
+-customers
+--
++rent(product, customer)
++return(order)
++rent_random()
++get_customer_orders()
++get_orders()
++get_customers()
++get_customer(name)</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>

@@ -1,6 +1,8 @@
-﻿README - Ruby Beach Water Sports (Lab 2)
-Version 2 (2011-06-30)
+README - Ruby Beach Water Sports (Lab 3)
+Version 3 (2011-07-19)
 Skribent: Johannes Keinestam
+
+UPPDATERADE RUBRIKER: CHANGES, KLASSER, FELHANTERING, UML.
 
 INSTRUKTIONER:
 I Windows-miljö kan programmet köras genom att dubbelklicka på filen main.rb.
@@ -32,54 +34,62 @@ Då kan programmets backend ligga där, men en instans av GUI:t finnas för varj
 fysisk terminal.
 
 KLASSER:
-I mappen "views" kan de delar i programmet som har med visuell representation
-hittas. Alla dessa delar är moduler, eftersom det inte är av intresse att skapa
-fler än en instans av dem. Nedan följer korta beskrivningar om varje fil/modul.
+Denna rubrik beskriver klasser som har tillkommit eller förändrats. För mer information,
+se README för laboration 2 samt kommentarer i programfilerna.
 
-	- customer_list_menu.rb: modul för att visa menyn som visar alla kunder som
-	  någon gång har lånat en vara i systemet. Visar nya kunder som står i kö.
-	- messenger.rb: modul för att visa ett meddelande i terminalen för användaren.
-	  Kan också visa error-meddelanden. 
-	- rent_menu.rb: modul som sköter hantering av menyn där användaren välja vilken
-	  vara denne vill hyra. Visar alla varukategorier som finns i programmet.
-	- return_menu.rb: modul som hanterar menyn där användaren får välja vilken vara
-	  de vill lämna tillbaka. Visar en lista över alla uthyrda varor.
-	- selection_menu.rb: modul för den meny som i labbanvisningarna kallades "Lista 
-	  kunder". Eftersom denna skulle markera vilka varor som var lediga/upptagna 
-	  genom detta, tyckte jag detta namnet passade bättre. Visar lista över alla varor,
-	  och därefter om den är ledig eller upptagen (och då av vem).
-	- welcome_menu.rb: modul för den meny som visas när användaren startar programmet.
-	  Låter denne att välja en submeny, eller avsluta programmet.
+  /data/:
+    - order_handler.rb: (NY) modul som hanterar beställningar och kunder, såsom
+      metoder för uthyrning och återlämning. Refaktorerad från data_container.rb.
+    - product_handler.rb: (NY) modul som hanterar sortimentet. Refaktorerad från
+      data_container.rb.
+    - customer.rb: instansvariabler synliga så att mer information kan skrivas ut
+      i kundregistret och för återkommande kunder under uthyrningen. Kreditkort
+      och adress tillagt.
+    - order.rb: instansvariabler synliga så att de kan användas i den ekonomiska
+      statistiken.
 
-Mappen "data" innehåller de delar som har med själva funktionaliten att göra.
-De delar som det bara ska finnas en upplaga av (kösystemet, databehållaren) är
-moduler, resten är klasser som blir objekt under körningen.
+    Produktklasser flyttade till undermapp /products.
+    - article.rb: instansvariablar på klassnivå för priser. Dessa är synliga genom
+      ett knep som lägger till en attribute accessor på klassnivå (se kod).
 
-	- article.rb: klass som beskriver en generisk produkt i programmet. Denna 
-	  byggs ut genom arv när de egentliga produkterna skapas.
-	- Varorna, klasser: boat.rb, diving_gear.rb, jet_ski.rb, surfboard.rb.
-	- customer.rb: klass för en kund i systemet. Denna kund har änsålänge
-	  bara ett namn, men kan enkelt utökas med t.ex. kreditkortsnummer, adress osv.
-	- data_container.rb: modul som håller koll på sortimentet. Sköter logiken om
-	  utlåning och återlämning.
-	- queue_system.rb: modul för kösystemet, som används när en kund vill hyra en
-	  viss vara, men alla dessa varor är redan utlånade. Rätt logiktung.
+  /views/:
+    - financial_menu.rb: (NY) modul som hanterar ekonomimenyn. Har undermenyer för att
+      presentera intäkter samt priser. Tillåter redigering av priser. Presenteras
+      i tabeller.
+    - listings_menu.rb: (NY) modul som har hand om de tidigare menyerna Customer registry
+      och Selection.
+    - rent_menu.rb: hämtar nu data från kundregistret ifall man hyrt förut, så att man
+      slipper skriva in sina uppgifter igen. Frågar nu efter adress och kreditkort
+      (den sistnämnda måste vara rätt format, 4x4 siffror separerade med bindesträck).
+    - return_menu.rb: visar mer information om beställningen vid återlämning: pris och
+      datum.
 
-I rotmappen ligger en ynka Ruby-fil, samt lite dokumentation (inkl. denna).
+FELHANTERING:
+Felaktig indata från användaren hanteras så fort som möjligt genom if-satser, och
+användaren meddelas. Genom if-satserna kan jag välja att endast utföra en uppgift
+ifall indatan är korrekt, istället för att göra det ändå och stöta på problem senare.
+Detta, menar jag, är att att föredra över rescue-satser. Rescue-satser används dock
+vid ett ställe: när man ändrar priser. Detta eftersom jag använder Integer-klassen
+för att få en indata till ett nummer, eftersom jag vill försäkra mig om att användaren
+endast skriver in siffror. Indatan "10k" ska nämligen inte bli 10, utan ge felmeddelande
+istället.
 
-	- main.rb: startar programmet, genom att skapa sortimentet och hyra ut tre
-	  slumpade varor. När den är klar med det visas huvudmenyn.
-
-Programmet är i övrigt utförligt dokumenterat, så för ytterligare information
-rekommenderar jag att ta en titt på kommentarerna i .rb-filerna.
+Vad som görs när ett fel uppstår hanterar jag på två olika sätt, beroende på läga:
+meddelar användaren, eller gör ingenting. I icke-kritiska ögonblick så väljer jag att
+göra ingenting (som när man t.ex. skriver in ett felaktigt menyval i huvudmenyn).
+Vid känsliga delar i programmet, så som vid hyrtillfället så meddelar jag användaren
+att indatan var felaktig. På så sätt behöver jag inte ge användaren överflödig information
+även när denne inte önskar det.
 
 UML:
 För UML över utvalda klasser, se filen "uml.png"
 
 CHANGES:
-- Kösystem tillagt, för när alla önskade varor är upptagna.
-- Nya menyer: selection, customer registry.
-- Fler produkter (tre lånas ut automatiskt vid start).
-- Meddelandeutskrifter till användare.
-- Kraftiga omstruktureringar i kod.
-- Readme uppdaterad: Programdesign, Klasser, UML.
+- Undermenyer
+- Felhantering
+- Prissystem tillagt (bas- samt tim- och dagspriser)
+- Ekonomisk statistik
+- Prislista (redigerbar)
+- Omstruktureringar
+- Automatisk ifyllnad av kundinformation
+- Nytt UML

@@ -1,6 +1,7 @@
 require_relative "../views/welcome_menu"
 require_relative "../views/messenger"
-require_relative "data_container"
+require_relative "order_handler"
+require_relative "product_handler"
 
 #Module for queuing customers who, at the time of their order, couldn't rent their
 #product because they were already in use.
@@ -23,7 +24,7 @@ module QueueSystem
   #customer in the queue.
   def QueueSystem.check_availability
     #Only picks the product categories which are in the queue
-    selection = DataContainer::get_selection
+    selection = ProductHandler::get_selection
     queued_categories = selection.select { |category,articles| @queue.has_key?(category) }
 
     #Restructures the selection to: { product_category => number_of_available_products }
@@ -35,7 +36,7 @@ module QueueSystem
     available_product_count.each do |category,available_products|
       available_products.times do
         unless @queue[category].empty?
-          DataContainer::rent(category, @queue[category].first)
+          OrderHandler::rent(category, @queue[category].first)
           @queue[category].shift
         end
       end

@@ -1,5 +1,5 @@
-#Class that describes a customer, each having a name. Can be extended with
-#other info, such as credit card and address. 
+#Class that describes a customer, each having a name, credit card and address.
+#Extending the class for different data is rather trivial.
 class Customer
   include Comparable
   attr_reader :name, :card_no, :address
@@ -12,6 +12,7 @@ class Customer
     self.to_s <=> other.to_s
   end
 
+  #Returns the name of the customer.
   def to_s
     return @name
   end

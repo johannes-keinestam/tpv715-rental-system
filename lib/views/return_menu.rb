@@ -1,6 +1,6 @@
 require_relative "welcome_menu"
 require_relative "messenger"
-require_relative "../data/data_container"
+require_relative "../data/order_handler"
 
 #Menu which lets a user return their rented products.
 module ReturnMenu
@@ -9,7 +9,7 @@ module ReturnMenu
     system "cls"
 
     #Gets all active order, and puts in array.
-    @orders = (DataContainer::get_orders).values.flatten.select { |order| order.is_active? }
+    @orders = (OrderHandler::get_orders).select { |order| order.is_active? }
 
     puts "============================================================"
     puts "Current rentals:"
@@ -29,8 +29,8 @@ module ReturnMenu
     #If valid number tried to be deleted, return to welcome menu, otherwise show again
     if choice != 0 and choice <= @orders.length
       returned_order = @orders[choice-1]
-      DataContainer::return(returned_order)
-      Messenger::show_message("#{returned_order.product} returned!\nRented: #{returned_order.start_time}\nReturned: #{returned_order.stop_time}\nPrice: $#{returned_order.get_price}")
+      Messenger::show_message("#{returned_order.product} returned!\nRented: #{returned_order.start_time}\nReturned: #{Time.now}\nPrice: $#{returned_order.get_price}")
+      OrderHandler::return(returned_order)
     elsif choice == 0
       WelcomeMenu::show
     else

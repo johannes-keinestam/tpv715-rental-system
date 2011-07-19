@@ -1,7 +1,10 @@
 require_relative "welcome_menu"
-require_relative "../data/data_container"
+require_relative "../data/order_handler"
+require_relative "../data/product_handler"
 
+#Menu which shows selection and customer listings to the user.
 module ListingsMenu
+  #Shows main listings menu
   def ListingsMenu.show
     system "cls"
 
@@ -24,7 +27,8 @@ module ListingsMenu
     case choice
       when "1" then show_selection
       when "2" then show_customer_list
-      else WelcomeMenu.show
+      when "0" then WelcomeMenu::show
+      else ListingsMenu.show
     end
   end
 
@@ -33,8 +37,8 @@ module ListingsMenu
     system "cls"
 
     #Gets selection list, and list of registered orders
-    @selection = DataContainer::get_selection
-    @orders = DataContainer::get_orders
+    @selection = ProductHandler::get_selection
+    @orders = OrderHandler::get_customer_orders
 
     #Puts non-rented products from selection, and rented products from order list
     #into array. This way it can display the rental data (customer, time).
@@ -71,8 +75,8 @@ module ListingsMenu
   def ListingsMenu.show_customer_list
     system "cls"
 
-    #Gets all customers from DataContainer
-    @customers = (DataContainer::get_orders).keys.sort
+    #Gets all customers from OrderHandler
+    @customers = (OrderHandler::get_customers).sort
 
     cust_length = @customers.sort { |a,b| a.name.length <=> b.name.length }
     table_length_customer = cust_length.last.name.length+5
