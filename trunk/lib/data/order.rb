@@ -1,7 +1,7 @@
 #Describes an order of one product placed in the system. This class calculates
 #and keeps track of the total price of the order when it is returned.
 class Order
-  attr_reader :product, :customer, :start_time, :stop_time
+  attr_accessor :product, :customer, :start_time, :stop_time, :price
 
   #Creates a new order for the specified customer.
   def initialize(product, customer)
@@ -37,9 +37,9 @@ class Order
     #affect price of an already finished order.
     if @price.nil?
       if @active
-        hours = ((@start_time-Time.now)/3600).to_i
+        hours = ((Time.now-@start_time)/3600).to_i
       else
-        hours = ((@start_time-@stop_time)/3600).to_i
+        hours = ((@stop_time-@start_time)/3600).to_i
       end
       @price = @product.get_price(hours)
     end

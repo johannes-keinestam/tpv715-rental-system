@@ -1,12 +1,15 @@
-README - Ruby Beach Water Sports (Lab 3)
-Version 3 (2011-07-19)
+README - Ruby Beach Water Sports (Lab 4)
+Version 4 (2011-08-03)
 Skribent: Johannes Keinestam
 
-UPPDATERADE RUBRIKER: CHANGES, KLASSER, FELHANTERING, UML.
+UPPDATERADE RUBRIKER: INSTRUKTIONER, CHANGES, FELHANTERING, KLASSER, UML.
 
 INSTRUKTIONER:
 I Windows-miljö kan programmet köras genom att dubbelklicka på filen main.rb.
 Under *nix-miljöer så startas det via terminalen genom kommandot "ruby main.rb".
+För att programmet ska kunna köras måste Ruby 1.92 vara installerat (kan fungera
+med andra versioner, men det är ej garanterat). Utöver detta måste SQLite3 och
+Ruby-gem:et sqlite3-ruby vara installerat.
 
 OM PROJEKTET:
 Ruby Beach Water Sports (RBWS) är ett uthyrningssystem för båtar och andra
@@ -35,34 +38,28 @@ fysisk terminal.
 
 KLASSER:
 Denna rubrik beskriver klasser som har tillkommit eller förändrats. För mer information,
-se README för laboration 2 samt kommentarer i programfilerna.
+se README för laboration 3 samt kommentarer i programfilerna.
 
   /data/:
-    - order_handler.rb: (NY) modul som hanterar beställningar och kunder, såsom
-      metoder för uthyrning och återlämning. Refaktorerad från data_container.rb.
-    - product_handler.rb: (NY) modul som hanterar sortimentet. Refaktorerad från
-      data_container.rb.
-    - customer.rb: instansvariabler synliga så att mer information kan skrivas ut
-      i kundregistret och för återkommande kunder under uthyrningen. Kreditkort
-      och adress tillagt.
-    - order.rb: instansvariabler synliga så att de kan användas i den ekonomiska
-      statistiken.
-
-    Produktklasser flyttade till undermapp /products.
-    - article.rb: instansvariablar på klassnivå för priser. Dessa är synliga genom
-      ett knep som lägger till en attribute accessor på klassnivå (se kod).
+    - database_handler.rb: (NY) modul som hanterar all kommunikation med databasen.
+      Blir därmed ett gränssnitt mellan de två olika. Används när programmet startar
+      för att läsa in databasen, samt när någon data förändras och behöver skrivas
+      till databasen.
+    - /products/article.rb: utökat med id-nummer för varor, så att referenser till en
+      specifik vara kan sparas i databasen på ett smidigt sätt.
+    - customer.rb: lagt till id-nummer för kund, så att referenser till en specifik
+      kund kan sparas i databasen på ett smidigt sätt.
+    - order.rb: buggfix, räknar nu ut uthyrningstiden på rätt sätt.
+    - order_handler.rb: säger till DatabaseHandler att lägga till information i
+      databasen så fort något förändras (t.ex. beställningar skapas eller lämnas
+      tillbaka). Metoder för att skapa saker med information från databasen lades
+      också till. Kund-relaterade metoder fungerar med kund-id.
+    - product_handler.rb: kan nu hantera id-nummer för produkter.
 
   /views/:
-    - financial_menu.rb: (NY) modul som hanterar ekonomimenyn. Har undermenyer för att
-      presentera intäkter samt priser. Tillåter redigering av priser. Presenteras
-      i tabeller.
-    - listings_menu.rb: (NY) modul som har hand om de tidigare menyerna Customer registry
-      och Selection.
-    - rent_menu.rb: hämtar nu data från kundregistret ifall man hyrt förut, så att man
-      slipper skriva in sina uppgifter igen. Frågar nu efter adress och kreditkort
-      (den sistnämnda måste vara rätt format, 4x4 siffror separerade med bindesträck).
-    - return_menu.rb: visar mer information om beställningen vid återlämning: pris och
-      datum.
+    - save_menu.db: (NY) modul som hanterar den nya funktionen att spara ner
+      information från databasen till fil. Tillåter två alternativ: spara kundregister,
+      och spara ekonomisk information.
 
 FELHANTERING:
 Felaktig indata från användaren hanteras så fort som möjligt genom if-satser, och
@@ -81,15 +78,19 @@ Vid känsliga delar i programmet, så som vid hyrtillfället så meddelar jag an
 att indatan var felaktig. På så sätt behöver jag inte ge användaren överflödig information
 även när denne inte önskar det.
 
+Jag låter programmet skapa databasen om den inte kan hittas. På så sätt kan jag minimera
+fel som beror på databasen. Utöver detta skulle man även kunna undersöka så att databasen
+har rätt format (d.v.s. inte har felaktiga tabeller i sig), för att gardera sig ytterligare
+mot sådana fel. Detta har jag valt att inte göra, eftersom jag anser att SQL ligger lite
+utanför denna kursens område.
+
 UML:
 För UML över utvalda klasser, se filen "uml.png"
 
 CHANGES:
-- Undermenyer
-- Felhantering
-- Prissystem tillagt (bas- samt tim- och dagspriser)
-- Ekonomisk statistik
-- Prislista (redigerbar)
-- Omstruktureringar
-- Automatisk ifyllnad av kundinformation
-- Nytt UML
+- Produkter & kunder har nu id-nummer
+- Databas som sparar data mellan körningar
+- Möjlighet att spara till fil:
+    - kundregister
+    - ekonomisk information (prislista, utbud, beställningar, inkomst)
+- Uthyrningstid (och därmed pris) räknas nu ut på rätt sätt

@@ -2,15 +2,12 @@
 #class. Has no knowledge of the renter, only it's own data (ID, price and
 #whether it's rented or not).
 class Article
-  attr_reader :idNo, :price_hr, :price_base, :price_day
-  #Class level instance variables for prices
-  @price_hr = 0
-  @price_base = 0
-  @price_day = 0
+  attr_reader :name, :price_hr, :price_base, :price_day, :id
   
-  def initialize(idNo)
+  def initialize(name, id)
     @rented = false
-    @idNo = idNo
+    @name = name
+    @id = id
   end
 
   def rent
@@ -39,7 +36,7 @@ class Article
   end
   
   def to_s
-    return "Article #{@idNo}"
+    return @name
   end
 
   #Makes variables available on class level without letting
