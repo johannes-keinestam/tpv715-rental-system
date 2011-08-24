@@ -69,6 +69,6 @@ module RentMenu
       puts "Your ATM card number: (ex. 1234-1234-1234-1234)"
       rental_card = gets.chomp
     end
-    @rental_customer = Customer.new(rental_name, rental_card, rental_add)
+    @rental_customer = Customer.new(rental_name, rental_card, rental_add, OrderHandler::get_available_customer_id)
   end
 end

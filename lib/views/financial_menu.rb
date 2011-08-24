@@ -1,6 +1,7 @@
 require_relative "welcome_menu"
 require_relative "../data/order_handler"
 require_relative "../data/product_handler"
+require_relative "../data/database_handler"
 require "Date"
 
 #Menu which presents financial information to the user.
@@ -120,6 +121,7 @@ module FinancialMenu
       puts "=========================================================="
       puts "PRESS ENTER TO RETURN"
 
+      DatabaseHandler::update_prices(product, product.price_base, product.price_hr, product.price_day)
       gets
       FinancialMenu::show
     else

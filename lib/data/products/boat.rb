@@ -7,13 +7,9 @@ class Boat < Article
   @price_base = 200
   @price_day = 1200
   
-  def initialize(name)
+  def initialize(name, id)
     @rented = false
     @name = name
-  end
-
-  #Returns the name of the boat.
-  def to_s
-    return "Boat: #{@name}"
+    @id = id
   end
 end

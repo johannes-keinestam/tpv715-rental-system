@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\title{Mjukvara och lagen\large \\ Rapport i TPV715, Högskolan på Gotland}
+\date{}
+\begin{document}
+	\author{Johannes Keinestam}
+	\date{\today}
+	\maketitle
+
+	\section{Om rapporten}
+	Denna rapport skrevs som slutuppgift under programmeringsprojektet i TPV715 (Programmering i Ruby), en distanskurs från Högskolan på Gotland. Skriven av Johannes Keinestam.
+
+	\subsection{Syfte}
+	Under kursens gång har jag programmerat ett uthyrningssystem där kunder kan hyra produkter genom att registrera sina personuppgifter (bl.a. namn och adress). I den sista deluppgiften under detta programmeringsprojekt lades en funktion till som tillåter ansvariga att spara ner kundernas personuppgifter till fil, med målet att sälja dessa till reklamföretag och liknande. Denna rapport behandlar frågan huruvida detta är lagligt eller ej. Detta ska förhoppningsvis ge mig som programmerare en funderare samt en större insikt i hur man bör hantera personuppgifter, både rent lagligt men även ur en etisk synvinkel.
+	
+	Utöver detta ska jag även undersöka vad för rättigheter jag som mjukvaruutvecklare kan förvänta mig ifall min programvara skulle säljas. Om jag i framtiden ska arbeta som programmerare i Sverige så är detta synnerligen nödvändigt att veta. 
+	
+	Jag har ingen större kunskap inom svensk lag, men jag vet att personuppgifter är en hårt reglerad del av den (till skillnad från många andra länder), och detta på gott och ont. Dessa bestämmelser finns i något som heter Personuppgiftslagen (PuL). Det känns därmed inte helt fel att börja kolla där.
+
+	\section{Försäljning av personuppgifter till tredje part}
+	Den här delen av rapporten behandlar de juridiska funderingarna kring programvarans kundregister, och försäljning av dessa uppgifter till en tredje part i marknadsföringssyfte.
+
+ 	 \subsection{Vad är en personuppgift?}
+ 	 Personuppgiftslagen definierar en personuppgift som följande:
+		\begin{quotation}
+		"All slags information som direkt eller indirekt kan hänföras till en fysisk person som är i livet." (Personuppgiftslag 1998:204, 3 §)\cite{pul}
+		\end{quotation}
+	Vi kan genast dra slutsatsen att det stämmer överens med uppgifterna vi har registrerat i programmets databas; ett namn och en adress är definitivt uppgifter som kan hänföras till en fysisk person. 
+
+	\subsection{Personuppgifter och lagen}
+	I mitt scenario handlar det om namn och adresser till kunder som ska säljas. Detta är, enligt lagens definition en "behandling av personuppgift". Alla behandlingar av personuppgifter går efter en enkel devis, som detaljeras i PuL 10 §: personuppgifter får behandlas om den registrerade (d.v.s. personen uppgifterna rör) har lämnat sitt samtycke till behandlingen. Samtycke finns när kunden registrerar sina uppgifter i systemet, dock är det värt att notera 23 § och 25 § som säger att kunden måste ges information om hur personuppgifterna ska hanteras även när uppgifterna samlas in direkt från kunden (till skillnad från automatiserad insamling från tredje part).
+
+	Detta leder till vad man måste göra för att sälja personuppgifterna. Här kommer återigen samtycke in i bilden, särskilt då försäljning av personuppgifter till tredje part inte innefattas i det som vanligen förväntas av tjänsten i fråga (uthyrningsfirma i detta fall). Om man själv har handlat på internet har man säkert märkt något slags avtal man ska läsa igenom. Detta innehåller precis sådan information. 
+	
+	För att sälja personuppgifterna till marknadsföringsföretag behövs därmed explicit samtycke från kunden. Datainspektionen menar att undantag finns, t.ex. när kopplingen mellan tredje partens marknadsföring och de personuppgiftsansvariga (d.v.s. jag eller mitt företag) är uppenbar.\cite{datainspektion} Emellertid kan man kringgå PuL genom att driva företaget (samt all utrustning) från ett land som inte är med i EU, men eftersom uthyrning kräver en viss fysisk närvaro så är detta inte aktuellt.\cite{pul}
+	
+	\subsection{Personlig reflektion}
+	Hantering av personuppgifter är ett känsligt ämne. Ingen vill ha sina känsliga personuppgifter ute på villovägar. Därför känns det helt rätt av lagen att kräva samtycke från användaren när deras personuppgifter kan komma att hanteras på något oväntat sätt.
+
+	När detta samtycke dock kan komma från ett alldeles för långt kundavtal över internet, kan detta ställa till problem. Jag tror alla kan känna igen den där lilla kryssrutan i beställningsformuläret i en webbshop som man ska kryssa ifall man har läst kundavtalet -- men man kan fråga sig hur många som verkligen läser igenom det. Vem vet, de där avtalen kanske tillåter företagen att göra i princip vad som helst med ens personuppgifter. 
+	
+	Om dessa ofördelaktiga villkor kan gömmas i en stor textmassa så kommer vissa etiska funderingar in i bilden, men å andra sidan så vet jag inte hur väl lagen kan försäkra en detta, och hur mycket som bör vara individens ansvar. Jag själv tycker PuL gör så mycket man kan hoppas. 
+	
+	I mitt uthyrningssystem skulle denna försäljning av personuppgifter kunna utföras ifall vi låter kunden godkänna ett kundavtal där vi klargör att deras personuppgifter möjligen kommer säljas till tredje part.\cite{samtycke}
+	
+	\section{Rättigheter som mjukvaruutvecklare}
+	Följande del av rapporten behandlar de rättigheter och förväntningar man kan ha som mjukvaruutvecklare vars mjukvara ska säljas vidare.
+	\subsection{Att sälja programvara}
+	En anställd programmerare skiljer sig inte mycket från någon annan typ av anställning. Ens förväntade rättigheter som anställd mjukvaruutvecklare beror därmed på ens anställningsavtal. Man har d.v.s. inga särskilda rättigheter till det man har producerat i anställningen -- såvida ens avtal inte stipulerar det, vilket är högst osannolikt. 
+
+	Om man inte är i anställning och själv har skapat programvaran, så är man fri att sälja sin produkt som man vill. Det finns dock vissa saker att ha i åtanke, och mest nämnvärt är licenser. Ofta när man programmerar så använder man externa kodbibliotek, och ifall dessa är distribuerade med en licens som inte tillåter att den används i kommersiella produkter så får man inte sälja dessa vidare som en del av sitt program. I så fall får man koda dessa delar själv, eller hitta ett alternativ som tillåter detta. 
+
+	Ett orosmoment i mitt projekt skulle då vara SQLite samt tillhörande bindningsbibliotek, men dessa är som tur är fria att distribuera vidare i kommersiell programvara.
+
+	\subsection{Personlig reflektion}
+	Resultatet är föga förvånande; om man är anställd på ett företag för att programmera, så har man inga rättigheter till det man har utvecklat i tjänsten. Det kan kännas trist, men är en självklarhet om man är anställd.
+	
+	Även fast det kan finnas en viss säkerhet att jobba som anställd på ett mjukvaruföretag, så skulle det vara kul att själv starta ett företag och pröva lyckan. 
+
+	\section{Sammanfattning}
+	För att kunna sälja personuppgifter ur ett kundregister till tredje part så måste man informera kunderna om detta. Detta görs lämpligen via ett kundavtal som måste godkännas när kunden registrerar sina personuppgifter i systemet. 
+	
+	När det gäller försäljning av programvaran man har utvecklat, så har man inga egentliga rättigheter som anställd (ifall ens anställningsavtal inte, mot förmodan, skulle stipulera att man har det). Om man inte utvecklat mjukvaran under anställning så får man sälja det, men man måste vara försiktig med att använda externa kodbibliotek som inte tillåter att de distribueras vidare.
+
+\begin{thebibliography}{9}
+
+\bibitem{pul}
+  Personuppgiftslag,
+  SFS,
+  1998:204,
+  \url{ http://www.notisum.se/rnp/sls/lag/19980204.htm}.
+
+\bibitem{samtycke}
+  Samtycke enligt personuppgiftslagen,
+  Datainspektionen,
+  \url{http://www.datainspektionen.se/lagar-och-regler/personuppgiftslagen/samtycke/}.
+
+\bibitem{datainspektion}
+   Får ett företag använda ett kundregister för marknadsföringsändamål?,
+   Datainspektionen,
+  \url{http://www.datainspektionen.se/fragor-och-svar/personuppgiftslagen/far-ett-foretag-anvanda-ett-kundregister-for-marknadsforingsandamal-ar-det-tillatet-att-lamna-ut-uppgifter-for-att-andra-ska-kunna-anvanda-dessa-i-sin-marknadsforing/}.
+
+\end{thebibliography}
+
+\end{document}
